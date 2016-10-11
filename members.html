@@ -53,7 +53,7 @@
     var prev2prevMonth = monthNames[new Date().getMonth()-2];
     var currentYear = new Date().getFullYear().toString().substr(2,2) ;
       
-    var contests = [{name:currentMonth+currentYear,id:166} , {name:prevMonth+currentYear,id:165} , {name:prev2prevMonth+currentYear,id:164} ];
+    var contests = [{name:currentMonth+currentYear,id:166} , {name:prevMonth+currentYear,id:165} , {name:prev2prevMonth+currentYear,id:164}];
 
     var container = [];
 
@@ -74,7 +74,7 @@
     function fetchContents(){
 
       contests.forEach(function(item, index){
-
+		contents="";
         $.ajax({
           type: "GET",
           dataType: 'json',
@@ -82,10 +82,8 @@
           success: function(data) {
             d = data.result.list;
 
-            contents = '<h2>Codechef.com '+item.name+' Users</h2>'
-
+            contents += '<h2>Codechef.com - Users </h2>'
             contents += '<table>';
-
             contents += '<th>User Handle</th>'
 
 
@@ -94,11 +92,8 @@
               contents += '<td>' + '<a href="https://www.codechef.com/users/' + d[i].user_handle + '">' +d[i].user_handle + '</a>'  + '</td>';
               contents += '</tr>';
             }
-
-
-            contents += '</table><hr>';
-            container.push({content: contents, id: item.id});
-
+			contents += '</table><hr>';
+            
             container.sort(function(a,b) {return (a.id < b.id) ? 1 : ((b.id > a.id) ? -1 : 0);});
 
             //re-render on another successful ajax req
@@ -107,6 +102,8 @@
             container.forEach(function(item, index){
               document.getElementById("ranklist").innerHTML += item.content;
             });
+			container.push({content: contents, id: item.id});
+
 
           },
           error: function(e) {
