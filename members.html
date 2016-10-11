@@ -98,8 +98,6 @@
             });
 		
               document.getElementById("ranklist").innerHTML += item.content;
-			  //re-render on another successful ajax req
-            document.getElementById("ranklist").innerHTML = "";
 
 			container.sort(function(a,b) {return (a.id < b.id) ? 1 : ((b.id > a.id) ? -1 : 0);});
 			container.push({content: contents, id: item.id});
