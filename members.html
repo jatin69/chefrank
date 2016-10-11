@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+    <title>DDUC Live Chef Rank </title>
+    <style type="text/css">
+      tr:nth-child(even) {background-color: #2f2f2f}
+    </style>
+  </head>
+
+  <body>
+
+    <a href="https://github.com/jatin69/chefrank/" class="github-corner"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#fff; color:#151513; position: absolute; top: 0; border: 0; right: 0;"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header>
+      <div class="container">
+        <div>
+        <img src="images/chefrank.png">
+        <h1 style="display:inline; margin: 0px;">chefrank-dduc</h1>
+        </div>  
+        <h2 id='institue' style="margin:0px;border:solid 1px #2e3e0f" onclick="document.execCommand('selectAll',false,null)" contenteditable='true'>Deen Dayal Upadhyaya College</h2>
+        <h3 style="color:#b4b4b4; margin:0px;" id='suggestions'><span style="font-size: x-small">Explore:<i> <a href="https://jatin69.github.io/chefrank/members.html" style="text-decoration:none"> View All Memeber </a> </i></h3>
+      </div>
+	  
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        
+
+        <div id = "ranklist"></div>
+
+      </section>
+      <section id="footer">
+      <ul>
+        <li><b>Why is my username not here?</b>&nbsp;<i>Set your Institute in <a href='http://codechef.com/'>codechef</a> as eg. 'Deen Dayal Upadhyaya College'</i></li>
+        <li><b>Updated with love </b> by <a href="https://github.com/jatin69/">Jatin Rohilla</a> using <a href="http://rohanverma.net/"> Rohan Verma</a>'s work <a href="https://github.com/rhnvrm/chefrank">rhnvrm/codechef-api-bouncer</a> </li>
+      </ul> 
+      </section>
+    </div>
+
+    <script>
+    var monthNames = ["JAN", "FEB", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUG", "SEPT", "OCT", "NOV", "DEC"];
+    var currentMonth = monthNames[new Date().getMonth()];
+    var prevMonth = monthNames[new Date().getMonth()-1];
+    var prev2prevMonth = monthNames[new Date().getMonth()-2];
+    var currentYear = new Date().getFullYear().toString().substr(2,2) ;
+      
+    var contests = [{name:currentMonth+currentYear,id:166} , {name:prevMonth+currentYear,id:165} , {name:prev2prevMonth+currentYear,id:164}];
+
+    var container = [];
+
+    var University = 'Deen Dayal Upadhyaya College';
+
+    $(document).ready(function(){
+      if(window.location.hash){
+        University = decodeURIComponent(window.location.hash.split('#')[1]);
+      }
+      else{
+        window.location.hash = encodeURIComponent(University);
+      }
+      document.getElementById("institue").innerHTML = University;
+      fetchContents();
+    });
+
+
+    function fetchContents(){
+
+      contests.forEach(function(item, index){
+
+        $.ajax({
+          type: "GET",
+          dataType: 'json',
+          url: 'https://cc-bouncer.herokuapp.com/'+item.name+'/Institution%3D'+University,
+          success: function(data) {
+            d = data.result.list;
+
+            contents = '<h2>Codechef.com '+item.name+' Challenge</h2>'
+
+            contents += '<table>';
+
+            contents += '<th>Rank</th><th>Score</th><th>User Handle</th>'
+
+
+            for(i = 0; i < d.length; i++){
+              contents += '<tr>';
+              contents += '<td>' + d[i].rank + '</td>';
+              contents += '<td>' + d[i].score + '</td>';
+              contents += '<td>' + '<a href="https://www.codechef.com/users/' + d[i].user_handle + '">' +d[i].user_handle + '</a>'  + '</td>';
+              contents += '</tr>';
+            }
+
+
+            contents += '</table><hr>';
+            container.push({content: contents, id: item.id});
+
+            container.sort(function(a,b) {return (a.id < b.id) ? 1 : ((b.id > a.id) ? -1 : 0);});
+
+            //re-render on another successful ajax req
+            document.getElementById("ranklist").innerHTML = "";
+
+            container.forEach(function(item, index){
+              document.getElementById("ranklist").innerHTML += item.content;
+            });
+
+          },
+          error: function(e) {
+            fetchContents();
+            console.log("Error fetching data");
+            console.log(e.message);            
+          }
+        });
+        
+      });
+    }
+
+    $('#institue').bind('keypress',function(e){
+        $.ajax({
+          type: "GET",
+          dataType: 'json',
+          url: 'https://cc-bouncer.herokuapp.com/autocomplete/'+contests[0].name+'/'+$(this).html(),
+          success: function(data) {
+            //empty before adding
+            $('#suggestions').html('');
+
+            data.result.forEach(function(item, index){
+              encodedInsti = encodeURIComponent(item.text);
+              document.getElementById('suggestions').innerHTML += '<a href="#'+encodedInsti+'" class="suggestion-item" id="'+encodedInsti+ '">' + item.text + '</a>,'; 
+            })
+
+            $('a.suggestion-item').click(function(){
+
+              document.getElementById("institue").innerHTML = decodeURIComponent(this.id);
+
+              //empty before updating
+              $('#suggestions').html('');
+
+              //render data of new uni
+              University = this.id;
+              document.getElementById("ranklist").innerHTML = "";
+              container = [];
+
+              fetchContents()
+
+          });
+          },
+          error: function(e) {
+            console.log("Error fetching data");
+            console.log(e.message);            
+          }
+        });
+    });
+
+
+      
+    </script>
+    
+  </body>
+</html>
+
