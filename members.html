@@ -97,11 +97,11 @@
             
             });
 		
-              document.getElementById("ranklist").innerHTML += item.content;
-
-			container.sort(function(a,b) {return (a.id < b.id) ? 1 : ((b.id > a.id) ? -1 : 0);});
+            container.sort(function(a,b) {return (a.id < b.id) ? 1 : ((b.id > a.id) ? -1 : 0);});
 			container.push({content: contents, id: item.id});
+		document.getElementById("ranklist").innerHTML += item.content;
 
+			
 
           },
           error: function(e) {
