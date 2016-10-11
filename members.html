@@ -52,9 +52,10 @@
     var currentMonth = monthNames[new Date().getMonth()];
     var prevMonth = monthNames[new Date().getMonth()-1];
     var prev2prevMonth = monthNames[new Date().getMonth()-2];
+	var prev3prevMonth = monthNames[new Date().getMonth()-3];
     var currentYear = new Date().getFullYear().toString().substr(2,2) ;
       
-    var contests = [{name:currentMonth+currentYear,id:166} , {name:prevMonth+currentYear,id:165} , {name:prev2prevMonth+currentYear,id:164}];
+    var contests = [{name:currentMonth+currentYear,id:166} , {name:prevMonth+currentYear,id:165} , {name:prev2prevMonth+currentYear,id:164}, {name:prev3prevMonth+currentYear,id:163}];
 
     var container = [];
 
