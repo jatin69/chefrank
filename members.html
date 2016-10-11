@@ -72,9 +72,13 @@
 
 
     function fetchContents(){
+		contents="";
+		 contents += '<h2>Codechef.com - Users </h2>'
+            contents += '<table>';
+            contents += '<th>User Handle</th>'
 
       contests.forEach(function(item, index){
-		contents="";
+
         $.ajax({
           type: "GET",
           dataType: 'json',
@@ -82,10 +86,7 @@
           success: function(data) {
             d = data.result.list;
 
-            contents += '<h2>Codechef.com - Users </h2>'
-            contents += '<table>';
-            contents += '<th>User Handle</th>'
-
+       
 
             for(i = 0; i < d.length; i++){
               contents += '<tr>';
@@ -94,14 +95,13 @@
             }
 			contents += '</table><hr>';
             
-            container.sort(function(a,b) {return (a.id < b.id) ? 1 : ((b.id > a.id) ? -1 : 0);});
-
-            //re-render on another successful ajax req
+            });
+		
+              document.getElementById("ranklist").innerHTML += item.content;
+			  //re-render on another successful ajax req
             document.getElementById("ranklist").innerHTML = "";
 
-            container.forEach(function(item, index){
-              document.getElementById("ranklist").innerHTML += item.content;
-            });
+			container.sort(function(a,b) {return (a.id < b.id) ? 1 : ((b.id > a.id) ? -1 : 0);});
 			container.push({content: contents, id: item.id});
 
 
