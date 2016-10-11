@@ -1,7 +1,7 @@
 <img src="images/chefrank.png" align="left" width="192px" height="192px"/>
 <img align="left" width="0" height="192px" hspace="10"/>
 
-# :chart_with_upwards_trend: Live chef rank fetcher
+# Live chef rank fetcher
 
 [![Under Development](https://img.shields.io/badge/under-development-orange.svg)](https://github.com/cezaraugusto/github-template-guidelines)
 
